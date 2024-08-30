@@ -14,13 +14,11 @@ app.get("/", async (req, res, next) => {
 });
 
 app.use("/api", require("./routes/api.route"));
-// Middleware to generate 404 error for undefined routes
-app.use(notFoundHandler);
 
-// Error handling middleware
+app.use(notFoundHandler);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 sequelize
   .sync()
   .then(() => {
