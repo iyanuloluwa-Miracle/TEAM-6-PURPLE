@@ -1,11 +1,16 @@
 // controllers/itineraryController.js
 const Itinerary = require('../models/Itinerary');
 const User = require('../models/User');
-
+const itinerarySchema = require('../validators/itineraryValidator');
 // Create a new itinerary
 const createItinerary = async (req, res) => {
     const { title, destination, startDate, endDate } = req.body;
-    const userId = req.user.id; // Assuming user ID is in the request (e.g., from middleware)
+    const userId = req.user.id;
+     // Validate request data
+    const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
+    if (error) {
+        return res.status(400).json({ errors: error.details.map(detail => detail.message) });
+    }
 
     try {
         const itinerary = await Itinerary.create({
@@ -56,6 +61,12 @@ const getItinerary = async (req, res) => {
 const updateItinerary = async (req, res) => {
     const { id } = req.params;
     const { title, destination, startDate, endDate } = req.body;
+
+      // Validate request data
+    const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
+    if (error) {
+        return res.status(400).json({ errors: error.details.map(detail => detail.message) });
+    }
 
     try {
         const [updated] = await Itinerary.update(
