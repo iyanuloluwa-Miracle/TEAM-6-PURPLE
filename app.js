@@ -1,30 +1,33 @@
-const express = require('express');
-const createError = require('http-errors');
-const morgan = require('morgan');
-require('dotenv').config();
+const express = require("express");
+const sequelize = require("./config/database");
+const { notFoundHandler, errorHandler } = require("./middlewares/errorHandler");
+const morgan = require("morgan");
+require("dotenv").config();
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
-app.get('/', async (req, res, next) => {
-  res.send({ message: 'Awesome it works 🐻' });
+app.get("/", async (req, res, next) => {
+  res.send({ message: " Welcome to Team-6-Purple Api" });
 });
 
-app.use('/api', require('./routes/api.route'));
+app.use("/api", require("./routes/api.route"));
+// Middleware to generate 404 error for undefined routes
+app.use(notFoundHandler);
 
-app.use((req, res, next) => {
-  next(createError.NotFound());
-});
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    status: err.status || 500,
-    message: err.message,
-  });
-});
+// Error handling middleware
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
+sequelize
+  .sync()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
