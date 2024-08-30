@@ -2,8 +2,14 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {registerSchema,loginSchema} = require('../validators/authValidator');
 
 const register = async (req, res) => {
+    // Validate request body
+    const { error } = registerSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+    }
     const { email, password, firstName, lastName } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
@@ -17,6 +23,10 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+    const { error } = loginSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
+    }
     const { email, password } = req.body;
 
     const user = await User.findOne({ where: { email } });
