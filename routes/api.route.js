@@ -6,8 +6,8 @@ router.get('/', async (req, res, next) => {
   res.send({ message: 'Ok api is working 🚀' });
 });
 
-router.post('users/register', register);
-router.post('users/login', login);
+router.post('/users/register', register);
+router.post('/users/login', login);
 
 
 module.exports = router;
