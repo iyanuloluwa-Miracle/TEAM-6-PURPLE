@@ -8,7 +8,7 @@ const {verifyToken} = require("../utils/auth");
 router.use(verifyToken);
 // Protect these routes with the verifyToken middleware
 router.post("/itineraries", itineraryController.createItinerary); 
-router.get("/",  itineraryController.getUserItineraries); 
+router.get("/itineraries",  itineraryController.getUserItineraries); 
 router.get("/:id", itineraryController.getItinerary); 
 router.put("/:id", itineraryController.updateItinerary); 
 router.delete("/:id", itineraryController.deleteItinerary);
