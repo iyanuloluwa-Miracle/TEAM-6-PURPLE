@@ -1,27 +1,20 @@
 const axios = require('axios');
 const env = require('dotenv').config()
 
-/* const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow': '*',
-    'Authorizaton': `Bearer ${process.env.API_KEY}`
-}; */
 const headers = {
-    'Content-Type': 'application/json',
-};
+    'x-rapidapi-key': process.env.API_KEY,
+    'x-rapidapi-host': process.env.API_HOST
+}
 const payload = {
     username: process.env.API_USER,
     password: process.env.API_PASSWORD
 };
-let makcorpsUrl = `https://api.makcorps.com/free` // 
-let url = `https://api.makcorps.com/auth`;
+let url = `https://tripadvisor16.p.rapidapi.com/api/v1`;
 
-const get = async () => {
+const get = async (params) => {
     try {
-        const response = await axios.post(url, payload, { headers: headers })
-        console.log(response, 'response:');
-        return response;
-
+        const response = await axios.get(`${url}/${params}`, { headers })
+        return response.data;
     } catch (e) {
         console.log(e, 'error returns:');
     }
