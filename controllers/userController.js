@@ -38,8 +38,13 @@ const login = async (req, res) => {
     res.json({ token, user });
 };
 
+const logout = (req, res) => {
+    res.json({ message: 'Logout successful' });
+};
+
 
 module.exports = {
     register,
-    login
+    login,
+    logout
 }
