@@ -93,14 +93,17 @@ const deleteItinerary = async (req, res) => {
         const deleted = await Itinerary.destroy({
             where: { id },
         });
+
         if (!deleted) {
             return res.status(404).json({ message: 'Itinerary not found' });
         }
-        res.status(204).send(); // No content
+
+        res.status(200).json({ message: 'Itinerary deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 module.exports = {
     createItinerary,
