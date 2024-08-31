@@ -12,7 +12,8 @@ router.post('/users/login', login);
 
 
 // hotels APIs
-router.get('/search/:search', searchLocation)
-router.get('/hotel-list', lists);
+router
+  .get('/search/:search', searchLocation)
+  .get('/hotel-list', lists);
 
 module.exports = router;

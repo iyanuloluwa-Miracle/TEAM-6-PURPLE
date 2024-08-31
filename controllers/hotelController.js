@@ -1,4 +1,5 @@
 const { get } = require('../config/axios');
+const { Hotel } = require('../models/Hotel');
 
 const searchLocation = async(req, res) => {
     const { search } = req.params;
@@ -14,6 +15,25 @@ const searchLocation = async(req, res) => {
             message: 'unable to get listing',
         })
     }
+}
+
+const searchHotel = async(req, res) => {
+    const url = `hotels/searchHotels`;
+    const { goeId, checkIn, checkOut, pageNumber, sort, ...others } = req.body;
+    const { adults, rooms, ...rest} = sort;
+    
+    if (Object.keys(rest).length !== 0) {
+        return true;
+    }
+
+    const insertSearch = await Hotel.create({
+        geoId: goeId,
+        checkIn: checkIn,
+        checkOut: checkOut,
+        ...others
+    })
+    
+
 }
 
 const lists = async (req, res) => {
