@@ -5,8 +5,9 @@ const itinerarySchema = require('../validators/itineraryValidator');
 // Create a new itinerary
 const createItinerary = async (req, res) => {
     const { title, destination, startDate, endDate } = req.body;
-    const userId = req.user.id;
-     // Validate request data
+    const userId = req.user.id; // Access userId from req.user
+
+    // Validate request data
     const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
     if (error) {
         return res.status(400).json({ errors: error.details.map(detail => detail.message) });
@@ -28,7 +29,7 @@ const createItinerary = async (req, res) => {
 
 // Get all itineraries for a user
 const getUserItineraries = async (req, res) => {
-    const userId = req.user.id; // Get user ID from request
+    const userId = req.user.id; // Access userId from req.user
 
     try {
         const itineraries = await Itinerary.findAll({
@@ -39,6 +40,8 @@ const getUserItineraries = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
 
 // Get a specific itinerary
 const getItinerary = async (req, res) => {
