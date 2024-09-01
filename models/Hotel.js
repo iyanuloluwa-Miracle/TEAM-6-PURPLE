@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database')
 
-const BookHotel = sequelize.define('Hotels', {
+const BookHotel = sequelize.define('BookHotels', {
     geoId: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -30,7 +30,7 @@ const BookHotel = sequelize.define('Hotels', {
         defaultValue: 1
     },
     price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false
     },
     photos: {
