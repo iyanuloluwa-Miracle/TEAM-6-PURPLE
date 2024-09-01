@@ -12,7 +12,7 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
 
 - Node.js
 - Express
-- Sequelize (MySQL)
+- Sequelize (PostgreSQL)
 - JWT for Authentication
 
 ## Getting Started
@@ -20,7 +20,7 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
 ### Prerequisites
 
 - Node.js
-- MySQL
+- PostgreSQL
 
 ### Installation
 

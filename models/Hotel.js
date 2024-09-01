@@ -1,8 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database')
 
-const Hotel = sequelize.define('Hotel', {
+const BookHotel = sequelize.define('Hotel', {
     geoId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    locationId: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
@@ -16,22 +21,29 @@ const Hotel = sequelize.define('Hotel', {
         allowNull: false
     },
     adults: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 1
     },
     rooms: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 1
+    },
+    price: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    photos: {
+        type: DataTypes.ARRAY({})
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'open'
     }
 });
 
-const HotelSearchHistory = sequalize.define('HotelSearchHistory', {
-    // goeId:
-});
-
 module.exports = {
-    Hotel,
-    HotelSearchHistory
+    BookHotel,
 }

@@ -1,14 +1,15 @@
 const router = require('express').Router();
-const { register, login } = require('../controllers/userController');
 const { lists, searchLocation } = require('../controllers/hotelController');
+const userController = require("../controllers/userController");
 
 
-router.get('/', async (req, res, next) => {
-  res.send({ message: 'Ok api is working 🚀' });
+router.get("/", async (req, res, next) => {
+  res.send({ message: "Ok api is working " });
 });
 
-router.post('/users/register', register);
-router.post('/users/login', login);
+router.post("/users/register", userController.register);
+router.post("/users/login", userController.login);
+router.post("/users/logout", userController.logout); 
 
 
 // hotels APIs

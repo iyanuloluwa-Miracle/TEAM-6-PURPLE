@@ -1,7 +1,9 @@
-const { get } = require('../config/axios');
-const { Hotel } = require('../models/Hotel');
+const { get, getWithParams } = require('../config/axios');
+const { searchLocationSchema } = require('../validators/hotelValidator');
+const { BookHotel } = require('../models/Hotel');
+const { message } = require('../validators/itineraryValidator');
 
-const searchLocation = async(req, res) => {
+const searchLocation = async (req, res) => {
     const { search } = req.params;
     const url = `hotels/searchLocation?query=${search}`;
     const s = await get(url)
@@ -17,28 +19,48 @@ const searchLocation = async(req, res) => {
     }
 }
 
-const searchHotel = async(req, res) => {
-    const url = `hotels/searchHotels`;
-    const { goeId, checkIn, checkOut, pageNumber, sort, ...others } = req.body;
-    const { adults, rooms, ...rest} = sort;
-    
-    if (Object.keys(rest).length !== 0) {
-        return true;
-    }
+const searchHotels = async (req, res) => {
+    // const { error } = await searchLocationSchema.validate(req.params);
+    /* if (error) {
+        return res.status(400).json({ message: error.details[0].message })
+    } */
+    const { geoId, checkIn, checkOut, pageNumber, sort, ...others } = req.query;
+    const url = `hotels/searchHotels?geoId=${geoId}&checkIn=${checkIn}&checkOut=${checkOut}&pageNumber=${pageNumber}&sort=${sort}`;
 
-    const insertSearch = await Hotel.create({
+    const { data } = await get(url);
+
+    const filteredData = data.map(data => {
+        return {
+            id: data.id,
+            title: data.title,
+            provider: data.provider,
+            price: data.priceForDisplay,
+            photos: data.cardPhotos,
+            rating: data.bubbleRating,
+            primaryInfo: data.primaryInfo
+        }
+    })
+
+    return res.status(200).json({
+        message: 'hotel listing',
+        data: filteredData
+    });
+    /* const insertSearch = await Hotel.create({
         geoId: goeId,
         checkIn: checkIn,
         checkOut: checkOut,
         ...others
-    })
-    
+    }) */
+
 
 }
 
 const lists = async (req, res) => {
-    
-    const getList = await get();
+    return res.status(200).json({
+        message: 'hotel listing',
+        data: 'hello'
+    })
+    /* const getList = await get();
 
     if (getList) {
         return res.status(200).json({
@@ -49,10 +71,11 @@ const lists = async (req, res) => {
         return res.status(500).json({
             message: 'unable to get listing',
         })
-    }
+    } */
 }
 
 module.exports = {
     lists,
-    searchLocation
+    searchLocation,
+    searchHotels
 }
