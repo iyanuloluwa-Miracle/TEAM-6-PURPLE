@@ -45,12 +45,6 @@ const searchHotels = async (req, res) => {
         message: 'hotel listing',
         data: filteredData
     });
-    /* const insertSearch = await Hotel.create({
-        geoId: goeId,
-        checkIn: checkIn,
-        checkOut: checkOut,
-        ...others
-    }) */
 
 
 }
@@ -60,22 +54,31 @@ const lists = async (req, res) => {
         message: 'hotel listing',
         data: 'hello'
     })
-    /* const getList = await get();
+}
 
-    if (getList) {
-        return res.status(200).json({
-            message: 'hotel listing',
-            data: getList
-        })
-    } else {
-        return res.status(500).json({
-            message: 'unable to get listing',
-        })
-    } */
+const book = async(req, res) => {
+    console.log(req.body, 'req returns:');
+    const b = await BookHotel.create({
+        geoId: req.body.geoId,
+        locationId: req.body.locationId,
+        checkIn: req.body.checkIn,
+        checkOut: req.body.checkOut,
+        adults: req.body.adults,
+        rooms: req.body.rooms,
+        price: req.body.price,
+        photos: req.body.photos,
+        status: 'open'
+    })
+    return res.status(201).json({
+        message: 'booking',
+        data: b
+    });
+
 }
 
 module.exports = {
     lists,
     searchLocation,
-    searchHotels
+    searchHotels,
+    book
 }
