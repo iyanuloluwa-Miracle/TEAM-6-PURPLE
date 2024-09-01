@@ -14,7 +14,8 @@ app.get("/", async (req, res, next) => {
 });
 
 app.use("/api/v1/", require("./routes/api.route"));
-app.use("/api/v1/", require("./routes/itineraryRoutes"));
+app.use("/api/v1/", require("./routes/itinerary.route"));
+app.use("/api/v1/", require("./routes/hotel.route"));
 
 app.use(notFoundHandler);
 app.use(errorHandler);
