@@ -14,6 +14,11 @@ const searchLocationSchema = Joi.object({
     }).optional(),
 });
 
+const searchParamsSchema = Joi.object({
+    search: Joi.string().required()
+});
+
 module.exports = {
-    searchLocationSchema
+    searchLocationSchema,
+    searchParamsSchema
 }

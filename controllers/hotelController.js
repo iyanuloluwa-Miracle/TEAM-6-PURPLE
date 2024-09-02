@@ -1,9 +1,11 @@
 const { get, getWithParams } = require('../config/axios');
-const { searchLocationSchema } = require('../validators/hotelValidator');
+const { searchLocationSchema, searchParamsSchema } = require('../validators/hotelValidator');
 const { BookHotel } = require('../models/Hotel');
-const { message } = require('../validators/itineraryValidator');
 
 const searchLocation = async (req, res) => {
+
+    const v = await searchParamsSchema.validate(req.params);
+    console.log(v, 'validation says:');
     const { search } = req.params;
     const url = `hotels/searchLocation?query=${search}`;
     const s = await get(url)
@@ -27,7 +29,7 @@ const searchHotels = async (req, res) => {
     const { geoId, checkIn, checkOut, pageNumber, sort, ...others } = req.query;
     const url = `hotels/searchHotels?geoId=${geoId}&checkIn=${checkIn}&checkOut=${checkOut}&pageNumber=${pageNumber}&sort=${sort}`;
 
-    const { data } = await get(url);
+    const data = await get(url);
 
     const filteredData = data.map(data => {
         return {
@@ -56,7 +58,7 @@ const lists = async (req, res) => {
     })
 }
 
-const book = async(req, res) => {
+const book = async (req, res) => {
     console.log(req.body, 'req returns:');
     const b = await BookHotel.create({
         geoId: req.body.geoId,
