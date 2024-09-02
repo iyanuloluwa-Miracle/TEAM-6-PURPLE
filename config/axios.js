@@ -15,7 +15,7 @@ const get = async (url) => {
     console.log(url, 'url says:');
     try {
         const response = await axios.get(`${baseUrl}/${url}`, { headers })
-        return response.data.data;
+        return response;
     } catch (e) {
         console.log(e, 'error returns:');
     }

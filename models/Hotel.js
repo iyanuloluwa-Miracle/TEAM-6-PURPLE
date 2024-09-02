@@ -5,7 +5,6 @@ const BookHotel = sequelize.define('BookHotels', {
     geoId: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     locationId: {
         type: DataTypes.STRING,
