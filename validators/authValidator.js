@@ -1,17 +1,44 @@
 const Joi = require('joi');
 
-// Joi schema for user registration
+// Helper function to remove quotes from Joi error messages
+const removeQuotesFromMessage = (errors) => {
+    return errors.map(err => {
+        err.message = err.message.replace(/\"/g, '');
+        return err;
+    });
+};
+
+// Customized Joi schema for user registration
 const registerSchema = Joi.object({
-    firstName: Joi.string().max(100).regex(/^[a-zA-Z]+$/).required(),
-    lastName: Joi.string().max(100).regex(/^[a-zA-Z]+$/).required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(), // Enforcing password complexity
+    firstName: Joi.string()
+        .max(100)
+        .regex(/^[a-zA-Z]+$/)
+        .required()
+        .error(removeQuotesFromMessage),
+    lastName: Joi.string()
+        .max(100)
+        .regex(/^[a-zA-Z]+$/)
+        .required()
+        .error(removeQuotesFromMessage),
+    email: Joi.string()
+        .email()
+        .required()
+        .error(removeQuotesFromMessage),
+    password: Joi.string()
+        .min(8)
+        .required()
+        .error(removeQuotesFromMessage),
 });
 
-// Joi schema for user login
+// Customized Joi schema for user login
 const loginSchema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
+    email: Joi.string()
+        .email()
+        .required()
+        .error(removeQuotesFromMessage),
+    password: Joi.string()
+        .required()
+        .error(removeQuotesFromMessage),
 });
 
 module.exports = {
