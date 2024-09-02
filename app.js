@@ -1,6 +1,6 @@
 const express = require("express");
 const sequelize = require("./config/database");
-const { notFoundHandler, errorHandler } = require("./middlewares/errorHandler");
+const { notFoundHandler, errorHandler,methodNotAllowedHandler} = require("./middlewares/errorHandler");
 const morgan = require("morgan");
 require("dotenv").config();
 
@@ -17,8 +17,12 @@ app.use("/api/v1/", require("./routes/api.route"));
 app.use("/api/v1/", require("./routes/itinerary.route"));
 app.use("/api/v1/", require("./routes/hotel.route"));
 
+
+
 app.use(notFoundHandler);
 app.use(errorHandler);
+app.use(methodNotAllowedHandler)
+
 
 const PORT = process.env.PORT || 5000;
 sequelize
