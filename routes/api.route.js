@@ -8,13 +8,17 @@ router.get("/", async (req, res, next) => {
   res.send({ message: "Ok api is working " });
 });
 
-// Handle unsupported methods
-router.use(methodNotAllowedHandler);
+
 
 
 router.post("/users/register", userController.register);
 router.post("/users/login", userController.login);
 router.post("/users/logout", userController.logout); 
+
+// Handle unsupported methods for registration and login routes
+router.route("/users/register").all(methodNotAllowedHandler);
+router.route("/users/login").all(methodNotAllowedHandler);
+router.route("/users/logout").all(methodNotAllowedHandler);
 
 
 // hotels APIs
