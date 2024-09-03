@@ -1,7 +1,7 @@
 // routes/api.route.js
 const router = require("express").Router();
 const itineraryController = require("../controllers/itineraryController");
-const { verifyToken } = require("../utils/auth");
+const { verifyToken } = require("../middlewares/auth");
 
 
  router.use(verifyToken);
