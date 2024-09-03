@@ -1,6 +1,7 @@
 const { get, getWithParams } = require('../config/axios');
 const { searchLocationSchema, searchParamsSchema, bookHotelSchema } = require('../validators/hotelValidator');
 const { BookHotel } = require('../models/Hotel');
+const env = require('dotenv').config()
 
 const searchLocation = async (req, res) => {
 
@@ -54,6 +55,16 @@ const searchHotels = async (req, res) => {
         message: 'hotel listing',
         data: filteredData
     });
+}
+
+const listAttractions = async (req, res) => {
+    const baseUrl = process.env.BOOKINGDOTCOM;
+    const url = ``;
+    const getAttractions = await get(baseUrl, url);
+}
+
+const deleteBooking = async (req, res) => {
+
 }
 
 const lists = async (req, res) => {

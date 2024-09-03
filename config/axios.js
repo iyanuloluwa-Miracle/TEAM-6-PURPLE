@@ -10,9 +10,10 @@ const payload = {
     password: process.env.API_PASSWORD
 };
 let baseUrl = `https://tripadvisor16.p.rapidapi.com/api/v1`;
+const bookingUrl = process.env.BOOKINGDOTCOM;
+const tripAdvisorUrl = process.env.TRIPADVISOR;
 
-const get = async (url) => {
-    console.log(url, 'url says:');
+const get = async (baseUrl, url) => {
     try {
         const response = await axios.get(`${baseUrl}/${url}`, { headers })
         return response;
