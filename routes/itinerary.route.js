@@ -7,12 +7,10 @@ const { methodNotAllowedHandler } = require("../middlewares/errorHandler");
  router.use(verifyToken);
 // Define the routes and allowed methods
 router.route("/")
-    .post(itineraryController.createItinerary)
+    .post(itineraryController.createItinerary) // Allow POST to retrieve itineraries
+    .get(itineraryController.getUserItineraries) // Allow GET to retrieve itineraries
     .all(methodNotAllowedHandler);
-
-router.route("/")
-    .get(itineraryController.getUserItineraries)
-    .all(methodNotAllowedHandler);
+    
 
 router.route("/:id")
     .get(itineraryController.getItinerary)
