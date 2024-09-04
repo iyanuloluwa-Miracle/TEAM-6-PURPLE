@@ -1,12 +1,14 @@
 const express = require("express");
 const sequelize = require("./config/database");
 const { notFoundHandler, errorHandler,methodNotAllowedHandler} = require("./middlewares/errorHandler");
+const cookieParser = require('cookie-parser'); 
 const morgan = require("morgan");
 require("dotenv").config();
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.get("/", async (req, res, next) => {

@@ -35,11 +35,13 @@ const registerSchema = Joi.object({
         }),
     password: Joi.string()
         .min(8)
+        .regex(/^(?=.*[A-Z])(?=.*\d)/) // Requires at least one uppercase letter and one number
         .required()
         .messages({
             'string.base': 'Password should be a type of text',
             'string.empty': 'Password is required',
             'string.min': 'Password length must be at least 8 characters long',
+            'string.pattern.base': 'Password must contain at least one uppercase letter and one number',
             'any.required': 'Password is required'
         }),
 });
@@ -56,10 +58,12 @@ const loginSchema = Joi.object({
             'any.required': 'Email is required'
         }),
     password: Joi.string()
+        .regex(/^(?=.*[A-Z])(?=.*\d)/) // Requires at least one uppercase letter and one number
         .required()
         .messages({
             'string.base': 'Password should be a type of text',
             'string.empty': 'Password is required',
+            'string.pattern.base': 'Password must contain at least one uppercase letter and one number',
             'any.required': 'Password is required'
         }),
 });

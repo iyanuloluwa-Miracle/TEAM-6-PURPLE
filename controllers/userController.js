@@ -51,16 +51,27 @@ const login = async (req, res) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: "2h",
     });
-    res.json({ token, user });
+
+    // Set the token in a cookie
+    res.cookie('token', token, {
+      httpOnly: true, // Helps prevent XSS attacks
+      secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent only over HTTPS in production
+      maxAge: 2 * 60 * 60 * 1000, // 2 hours
+    });
+
+    res.json({ message: "Login successful", user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error logging in" });
   }
 };
 
+
 const logout = (req, res) => {
-  res.json({ message: "Logout successful" });
+  res.clearCookie('token'); 
+  res.status(200).json({ message: "Logout successful" });
 };
+
 
 module.exports = {
   register,
