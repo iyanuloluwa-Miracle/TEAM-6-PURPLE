@@ -2,15 +2,20 @@
 const router = require("express").Router();
 const itineraryController = require("../controllers/itineraryController");
 const { verifyToken } = require("../middlewares/auth");
-const auth = require("../middlewares/auth");
+const { methodNotAllowedHandler } = require("../middlewares/errorHandler");
 
+ router.use(verifyToken);
+// Define the routes and allowed methods
+router.route("/")
+    .post(itineraryController.createItinerary) // Allow POST to retrieve itineraries
+    .get(itineraryController.getUserItineraries) // Allow GET to retrieve itineraries
+    .all(methodNotAllowedHandler);
+    
 
-//  router.use(verifyToken);
-// Protect these routes with the verifyToken middleware
-router.post("/itineraries", [auth.verifyToken], itineraryController.createItinerary);
-router.get("/itineraries", [auth.verifyToken], itineraryController.getUserItineraries);
-router.get("/:id", [auth.verifyToken], itineraryController.getItinerary);
-router.put("/:id", [auth.verifyToken], itineraryController.updateItinerary);
-router.delete("/:id", [auth.verifyToken], itineraryController.deleteItinerary);
+router.route("/:id")
+    .get(itineraryController.getItinerary)
+    .put(itineraryController.updateItinerary)
+    .delete(itineraryController.deleteItinerary)
+    .all(methodNotAllowedHandler);
 
 module.exports = router;

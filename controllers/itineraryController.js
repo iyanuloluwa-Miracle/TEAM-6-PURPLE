@@ -1,17 +1,19 @@
-// controllers/itineraryController.js
 const Itinerary = require('../models/Itinerary');
-const User = require('../models/User');
 const itinerarySchema = require('../validators/itineraryValidator');
+const createError = require('http-errors');
+
 // Create a new itinerary
-const createItinerary = async (req, res) => {
+const createItinerary = async (req, res, next) => {
+    // Validate request data
+     const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
+    if (error) {
+        const errorMessage = error.details[0].message.replace(/"/g, '');
+        return res.status(400).json({ message: errorMessage });
+    }
+
+
     const { title, destination, startDate, endDate } = req.body;
     const userId = req.user.id; // Access userId from req.user
-
-    // Validate request data
-    const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
-    if (error) {
-        return res.status(400).json({ errors: error.details.map(detail => detail.message) });
-    }
 
     try {
         const itinerary = await Itinerary.create({
@@ -21,14 +23,15 @@ const createItinerary = async (req, res) => {
             endDate,
             userId,
         });
-        res.status(201).json(itinerary);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(201).json({ message: 'Itinerary created', itinerary });
+    } catch (err) {
+        console.error(err);
+        next(createError(500, 'Error creating itinerary'));
     }
 };
 
 // Get all itineraries for a user
-const getUserItineraries = async (req, res) => {
+const getUserItineraries = async (req, res, next) => {
     const userId = req.user.id; // Access userId from req.user
 
     try {
@@ -36,15 +39,14 @@ const getUserItineraries = async (req, res) => {
             where: { userId },
         });
         res.status(200).json(itineraries);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        console.error(err);
+        next(createError(500, 'Error fetching itineraries'));
     }
 };
 
-
-
 // Get a specific itinerary
-const getItinerary = async (req, res) => {
+const getItinerary = async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -55,21 +57,23 @@ const getItinerary = async (req, res) => {
             return res.status(404).json({ message: 'Itinerary not found' });
         }
         res.status(200).json(itinerary);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        console.error(err);
+        next(createError(500, 'Error fetching itinerary'));
     }
 };
 
 // Update an itinerary
-const updateItinerary = async (req, res) => {
+const updateItinerary = async (req, res, next) => {
     const { id } = req.params;
     const { title, destination, startDate, endDate } = req.body;
 
-      // Validate request data
     const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
     if (error) {
-        return res.status(400).json({ errors: error.details.map(detail => detail.message) });
+        const errorMessage = error.details[0].message.replace(/"/g, '');
+        return res.status(400).json({ message: errorMessage });
     }
+
 
     try {
         const [updated] = await Itinerary.update(
@@ -80,13 +84,14 @@ const updateItinerary = async (req, res) => {
             return res.status(404).json({ message: 'Itinerary not found' });
         }
         res.status(200).json({ message: 'Itinerary updated successfully' });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+    } catch (err) {
+        console.error(err);
+        next(createError(500, 'Error updating itinerary'));
     }
 };
 
 // Delete an itinerary
-const deleteItinerary = async (req, res) => {
+const deleteItinerary = async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -99,11 +104,11 @@ const deleteItinerary = async (req, res) => {
         }
 
         res.status(200).json({ message: 'Itinerary deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        console.error(err);
+        next(createError(500, 'Error deleting itinerary'));
     }
 };
-
 
 module.exports = {
     createItinerary,
