@@ -6,7 +6,7 @@ const { methodNotAllowedHandler } = require("../middlewares/errorHandler");
 
  router.use(verifyToken);
 // Define the routes and allowed methods
-router.route("/create")
+router.route("/")
     .post(itineraryController.createItinerary)
     .all(methodNotAllowedHandler);
 
