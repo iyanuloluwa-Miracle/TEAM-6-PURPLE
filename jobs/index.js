@@ -1,11 +1,5 @@
-const cron = require('node-cron');
-async function start() {
-    cron.schedule('* * * * *', async () => {
-        await trackBooking();
-        console.log('Bookings Jobs scheduled');
-    });
-}
+const updates = require('./updates');
 
-async function trackBooking() {
-    
-}
+module.exports = [
+    updates
+];
