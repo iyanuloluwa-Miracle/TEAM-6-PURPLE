@@ -51,8 +51,23 @@ const searchParamsSchema = Joi.object({
     })
 });
 
+const listAttractionsSchema = Joi.object({
+    id: Joi.number().required().messages({
+        'any.required': 'id is required',
+    }),
+    startDate: Joi.date().optional().messages({
+        'any.required': 'startDate is required',
+    }),
+    endDate: Joi.date().optional().messages({
+        'any.required': 'endDate is required',
+    }),
+    page: Joi.number().optional().messages({
+        'any.required': 'page is required',
+    }),
+});
 module.exports = {
     searchLocationSchema,
     searchParamsSchema,
-    bookHotelSchema
+    bookHotelSchema,
+    listAttractionsSchema
 }

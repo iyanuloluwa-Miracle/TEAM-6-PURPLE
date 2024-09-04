@@ -6,7 +6,7 @@ const itineraryRoutes = require('./itinerary.route');
 
 router.use('', apiRoutes);
 router.use('/itinerary', itineraryRoutes);
-router.use('/hotel', hotelRoutes);
+// router.use('/hotel', hotelRoutes);
 
 module.exports = {
     hotelRoutes,
