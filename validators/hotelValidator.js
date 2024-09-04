@@ -68,5 +68,6 @@ const listAttractionsSchema = Joi.object({
 module.exports = {
     searchLocationSchema,
     searchParamsSchema,
-    bookHotelSchema
+    bookHotelSchema,
+    listAttractionsSchema
 }

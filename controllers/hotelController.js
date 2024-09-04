@@ -1,5 +1,5 @@
 const { get, getWithParams, getBooking } = require('../config/axios');
-const { searchLocationSchema, searchParamsSchema, bookHotelSchema } = require('../validators/hotelValidator');
+const { searchLocationSchema, searchParamsSchema, bookHotelSchema, listAttractionsSchema } = require('../validators/hotelValidator');
 const { BookHotel } = require('../models/Hotel');
 const env = require('dotenv').config()
 const bookingUrl = process.env.BOOKINGDOTCOM;
@@ -76,10 +76,28 @@ const searchAttractionLocation = async (req, res) => {
     });
 }
 const listAttractions = async (req, res) => {
-    
+    const { error } = await listAttractionsSchema.validate(req.query);
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message })
+    }
+
+    const url = `attraction/searchAttractions?id=${id}&startDate=${startDate}&endDate=${endDate}&page=${page}`;
+    const results = await getBooking(url);
+    return res.status(200).json({
+        message: 'attraction listing',
+        data: results.data.data
+    });
 }
 
 const deleteBooking = async (req, res) => {
+    const { id } = req.params;
+
+    await BookHotel.destroy({
+        where: { id }
+    })
+    return res.status(200).json({
+        message: 'booking deleted'
+    });
 }
 
 const lists = async (req, res) => {
@@ -109,5 +127,6 @@ module.exports = {
     searchHotels,
     book,
     listAttractions,
-    searchAttractionLocation
+    searchAttractionLocation,
+    deleteBooking
 }
