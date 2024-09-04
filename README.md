@@ -131,3 +131,46 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
     "message": "Logged out successfully"
   }
   ```
+
+
+
+### Itinerary Planning Endpoints
+
+
+### CREATE ITINERARY PLAN
+
+- **URL:** `/api/v1/itineraries`
+- **Method:** `POST`
+- **Request Body:**
+- **Header:** `Authorization: Bearer <token>`
+
+  ```json
+  {
+    "title": "Vacation in Nigeria",
+    "destination": "Lagos,Nigeria ",
+    "startDate": "2024-09-10",
+    "endDate": "2024-09-20"
+   }
+  ```
+
+- **Response:**
+
+  ```json
+  {
+    "id": 16,
+    "title": "Vacation in SouthAfrica",
+    "destination": "jOHNNA,SouthAfrica ",
+    "startDate": "2024-09-10T00:00:00.000Z",
+    "endDate": "2024-09-20T00:00:00.000Z",
+    "userId": 1,
+    "updatedAt": "2024-09-03T15:32:21.558Z",
+    "createdAt": "2024-09-03T15:32:21.558Z"
+   }
+  ```
+
+### List Posts
+
+- **URL:** `/api/v1/post/list`
+- **Method:** `GET`
+- **Header:** `Authorization: Bearer <token>`
+  **Response:**
