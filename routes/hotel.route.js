@@ -13,7 +13,7 @@ router.route('/hotels/listHotels')
 router.route('/hotels/book')
     .post([auth.verifyToken], book)
     .all(methodNotAllowedHandler);
-router.route('/hotels/user-bookings/:userId')
+router.route('/hotels/user-bookings')
     .get([auth.verifyToken], userBookings)
     .all(methodNotAllowedHandler);
 router.route('/hotels/cancel/:id')
