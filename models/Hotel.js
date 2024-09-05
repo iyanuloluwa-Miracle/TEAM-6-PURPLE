@@ -2,6 +2,10 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database')
 
 const BookHotel = sequelize.define('BookHotels', {
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
     geoId: {
         type: DataTypes.STRING,
         allowNull: false,
