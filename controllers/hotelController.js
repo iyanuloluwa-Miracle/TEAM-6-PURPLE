@@ -89,11 +89,34 @@ const listAttractions = async (req, res) => {
     });
 }
 
+const userBookings = async (req, res) => {
+    const { userId } = req.params;
+    const bookings = await BookHotel.findAll({
+        where: { userId }
+    });
+    return res.status(200).json({
+        message: 'user bookings',
+        data: bookings
+    })
+}
+
+const cancelBooking = async (req, res) => {
+    const { id } = req.params;
+    await BookHotel.update(
+        { status: 'closed' },
+        { where: { id } }
+    )
+    return res.status(200).json({
+        message: 'booking closed'
+    });
+}
+
 const deleteBooking = async (req, res) => {
     const { id } = req.params;
 
     await BookHotel.destroy({
-        where: { id }
+        where: { id },
+        status: 'open'
     })
     return res.status(200).json({
         message: 'booking deleted'
@@ -108,10 +131,14 @@ const lists = async (req, res) => {
 }
 
 const book = async (req, res) => {
+
     const { error } = await bookHotelSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message })
     }
+
+    const { id } = req.user;
+    req.body.userId = id;
 
     const b = await BookHotel.create(req.body)
     return res.status(201).json({
@@ -128,5 +155,7 @@ module.exports = {
     book,
     listAttractions,
     searchAttractionLocation,
-    deleteBooking
+    deleteBooking,
+    userBookings,
+    cancelBooking
 }

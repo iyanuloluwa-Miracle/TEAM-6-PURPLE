@@ -10,7 +10,7 @@ async function fetchUpdates() {
 }
 
 async function schedule() {
-    cron.schedule("* * * * *", async () => {
+    cron.schedule("*/5 * * * *", async () => {
         console.log('*** start scheduling ***');
         await fetchUpdates();
     });
