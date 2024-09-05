@@ -1,12 +1,17 @@
 const cron = require('node-cron');
+const updatedData = require('../data/updatesData');
+const events = require('../config/events');
+
 
 async function fetchUpdates() {
-    console.log('got here FOR UPDATES');
-    return true;
+    const updates = await updatedData;
+    events.emit('get-updates', { updates });
+    return { updates}
 }
+
 async function schedule() {
     cron.schedule("* * * * *", async () => {
-        console.log('got here FOR SCHEDULE again');
+        console.log('*** start scheduling ***');
         await fetchUpdates();
     });
 }
