@@ -5,7 +5,7 @@ const createError = require('http-errors');
 // Create a new itinerary
 const createItinerary = async (req, res, next) => {
     // Validate request data
-     const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
+    const { error } = itinerarySchema.validate(req.body, { abortEarly: false });
     if (error) {
         const errorMessage = error.details[0].message.replace(/"/g, '');
         return res.status(400).json({ message: errorMessage });
@@ -85,8 +85,9 @@ const updateItinerary = async (req, res, next) => {
         }
         res.status(200).json({ message: 'Itinerary updated successfully' });
     } catch (err) {
-        console.error(err);
-        next(createError(500, 'Error updating itinerary'));
+        res.status(500).json({ message: 'Error updating itinerary' });
+        /* console.error(err);
+        next(createError(500, 'Error updating itinerary')); */
     }
 };
 

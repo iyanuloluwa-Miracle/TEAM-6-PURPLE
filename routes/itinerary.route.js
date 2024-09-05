@@ -19,11 +19,13 @@ router.get("/:id", itineraryController.getItinerary);
 router.route("/:id").all(methodNotAllowedHandler);  // Handle unsupported methods for single itinerary route
 
 // Update a specific itinerary by ID
-router.put("/:id", itineraryController.updateItinerary);
-router.route("/:id").all(methodNotAllowedHandler);  // Handle unsupported methods for single itinerary route
+router.route('/update/:id')
+    .put(itineraryController.updateItinerary)
+    // .all(methodNotAllowedHandler);  // Handle unsupported methods for single itinerary route
 
 // Delete a specific itinerary by ID
-router.delete("/:id", itineraryController.deleteItinerary);
-router.route("/:id").all(methodNotAllowedHandler);  // Handle unsupported methods for single itinerary route
+router.route("/delete/:id")
+    .delete(itineraryController.deleteItinerary);
+// router.route("/:id").all(methodNotAllowedHandler);  // Handle unsupported methods for single itinerary route
 
 module.exports = router;
