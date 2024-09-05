@@ -90,9 +90,10 @@ const listAttractions = async (req, res) => {
 }
 
 const userBookings = async (req, res) => {
-    const { userId } = req.params;
+    const { id } = req.user;
+    // const { userId } = req.params;
     const bookings = await BookHotel.findAll({
-        where: { userId }
+        where: { userId: id }
     });
     return res.status(200).json({
         message: 'user bookings',
