@@ -17,7 +17,7 @@ jobs:
         run: npm install -g newman
 
       - name: Run Postman Collection
-        run: newman run tester-collection.json -r html
+        run: newman run ./test/tester-collection.json -r html
         
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v3
@@ -29,7 +29,7 @@ jobs:
         run: npm install -g k6
  
       - name: Run k6 tests and generate HTML report
-        run: k6 run -o results.html first_test.js
+        run: k6 run -o results.html ./test/first_test.js
  
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v3
