@@ -13,8 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Newman
-        run: npm install -g newman
+      - name: Install Newman 
+        run: npm install -g newman newman-reporter-html
 
       - name: Run Postman Collection
         run: newman run ./test/tester-collection.json -r html
