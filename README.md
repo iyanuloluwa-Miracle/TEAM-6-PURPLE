@@ -284,9 +284,8 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
 
 - **URL:** `/api/v1/hotels`
 - **Method:** `GET`
-- **Request Body:**
-- **Header:** `Authorization: Bearer <token>`
-
+- **QUERY PARAMS:**
+  
   ```json
   {
     "geoId":304026,
@@ -296,6 +295,68 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
   }
  
   ```
+
+  ```json
+  {
+    "message": "hotel listing",
+  "data": [
+    {
+      "id": "20226148",
+      "title": "The White Orchid Hotel",
+      "provider": "Booking.com",
+      "price": "$81",
+      "photos": [
+        {
+          "__typename": "AppPresentation_PhotoItem",
+          "sizes": {
+            "__typename": "AppPresentation_PhotoItemSizeDynamic",
+            "maxHeight": 879,
+            "maxWidth": 1280,
+            "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/57/b7/f5/the-white-orchid-hotel.jpg?w={width}&h={height}&s=1"
+          }
+        },
+        {
+          "__typename": "AppPresentation_PhotoItem",
+          "sizes": {
+            "__typename": "AppPresentation_PhotoItemSizeDynamic",
+            "maxHeight": 720,
+            "maxWidth": 1080,
+            "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/69/82/02/caption.jpg?w={width}&h={height}&s=1"
+          }
+        },
+        {
+          "__typename": "AppPresentation_PhotoItem",
+          "sizes": {
+            "__typename": "AppPresentation_PhotoItemSizeDynamic",
+            "maxHeight": 720,
+            "maxWidth": 1080,
+            "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/69/81/fe/caption.jpg?w={width}&h={height}&s=1"
+          }
+        },
+        {
+          "__typename": "AppPresentation_PhotoItem",
+          "sizes": {
+            "__typename": "AppPresentation_PhotoItemSizeDynamic",
+            "maxHeight": 720,
+            "maxWidth": 1080,
+            "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/69/81/f9/caption.jpg?w={width}&h={height}&s=1"
+          }
+        }
+      ],
+      "rating": {
+        "count": "9",
+        "rating": 4
+      },
+      "primaryInfo": "Free breakfast available"
+    },
+   ] 
+
+  }
+ 
+  ```
+
+
+
 
 ### SEARCH LOCATION
 
@@ -327,22 +388,14 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
   }
   ```
 
+### GET USER BOOKINGS
+
+- **URL:** `/api/v1/hotels/user-bookings`
+- **Method:** `GET`
+- **Header:** `Authorization: Bearer <token>`
 - **Response:**
 
-  ```json
-  {
-    "message": "User created",
-    "user": {
-        "id": 37,
-        "email": "john.doeexample@gmail.com",
-        "password": "$2b$10$BO5urj6CMaszCqtlXvRWdOt5YAdYYDljnqPeZAuxCfajBIIeWiPu2",
-        "firstName": "Johnny",
-        "lastName": "Doui",
-        "updatedAt": "2024-09-03T14:51:57.622Z",
-        "createdAt": "2024-09-03T14:51:57.622Z"
-    }
-   }
-  ```
+
 
 
 
