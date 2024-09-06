@@ -17,13 +17,9 @@ jobs:
         run: npm install -g newman newman-reporter-html
 
       - name: Run Postman Collection
-        run: newman run ./test/tester-collection.json -r html
+        run: newman run ./test/tester-collection.json
         
-      - name: Upload HTML report as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: newman-results
-          path: newman-results.html
+  
         
       - name: Install k6
         run: npm install -g k6
