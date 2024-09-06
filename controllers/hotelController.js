@@ -130,25 +130,47 @@ const userBookings = async (req, res) => {
 
 const cancelBooking = async (req, res) => {
     const { id } = req.params;
-    await BookHotel.update(
-        { status: 'closed' },
-        { where: { id } }
-    )
-    return res.status(200).json({
-        message: 'booking closed'
-    });
+
+    const check = await BookHotel.findOne({
+        where: { id },
+        status: 'open'
+    })
+
+    if (check) {
+        await BookHotel.update(
+            { status: 'closed' },
+            { where: { id } }
+        )
+        return res.status(200).json({
+            message: 'booking closed'
+        });
+    } else {
+        return res.status(400).json({
+            message: 'booking not found'
+        });
+    }
 }
 
 const deleteBooking = async (req, res) => {
     const { id } = req.params;
 
-    await BookHotel.destroy({
+    const check = await BookHotel.findOne({
         where: { id },
         status: 'open'
     })
-    return res.status(200).json({
-        message: 'booking deleted'
-    });
+
+    if (check) {
+        await BookHotel.destroy({
+            where: { id },
+        })
+        return res.status(200).json({
+            message: 'booking deleted'
+        });
+    } else {
+        return res.status(400).json({
+            message: 'booking not found'
+        });
+    }
 }
 
 const lists = async (req, res) => {
