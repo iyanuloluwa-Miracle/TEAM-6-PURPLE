@@ -158,8 +158,8 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
   ```json
   {
     "id": 16,
-    "title": "Vacation in SouthAfrica",
-    "destination": "jOHNNA,SouthAfrica ",
+    "title": "Vacation in Nigeria",
+    "destination": "Lagos,Nigeria ",
     "startDate": "2024-09-10T00:00:00.000Z",
     "endDate": "2024-09-20T00:00:00.000Z",
     "userId": 1,
@@ -168,9 +168,120 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
    }
   ```
 
-### List Posts
+### FETCH A USER ITINERARIES
 
-- **URL:** `/api/v1/post/list`
+- **URL:** `/api/v1/itineraries/`
 - **Method:** `GET`
 - **Header:** `Authorization: Bearer <token>`
-  **Response:**
+- **Response:**
+
+  ```json
+  {
+    "id": 16,
+    "title": "Vacation in Nigeria",
+    "destination": "Lagos,Nigeria ",
+    "startDate": "2024-09-10T00:00:00.000Z",
+    "endDate": "2024-09-20T00:00:00.000Z",
+    "userId": 1,
+    "updatedAt": "2024-09-03T15:32:21.558Z",
+    "createdAt": "2024-09-03T15:32:21.558Z"
+   },
+    {
+    "id": 16,
+    "title": "Vacation in Ghana",
+    "destination": "Accra,Ghana ",
+    "startDate": "2024-09-10T00:00:00.000Z",
+    "endDate": "2024-09-20T00:00:00.000Z",
+    "userId": 1,
+    "updatedAt": "2024-09-03T15:32:21.558Z",
+    "createdAt": "2024-09-03T15:32:21.558Z"
+   }
+  ```
+
+
+### FETCH A SINGLE ITINERARIES
+
+- **URL:** `/api/v1/itineraries/:id`
+- **Method:** `GET`
+- **Header:** `Authorization: Bearer <token>`
+- **Response:**
+
+
+  ```json
+  {
+    "id": 16,
+    "title": "Vacation in Nigeria",
+    "destination": "Lagos,Nigeria ",
+    "startDate": "2024-09-10T00:00:00.000Z",
+    "endDate": "2024-09-20T00:00:00.000Z",
+    "userId": 1,
+    "updatedAt": "2024-09-03T15:32:21.558Z",
+    "createdAt": "2024-09-03T15:32:21.558Z"
+  },
+
+  ```
+
+
+### UPDATE A USER ITINERARY
+
+- **URL:** `/api/v1/itineraries/update/:id`
+- **Method:** `PUT`
+- **Header:** `Authorization: Bearer <token>`
+
+  ```json
+  {
+    "title": "Vacation in Togo",
+    "destination": "Togo,Togo ",
+    "startDate": "2024-09-10",
+    "endDate": "2024-09-20"
+   }
+  ```
+
+- **Response:**
+
+  ```json
+  {
+   "message":"Itinerary updated successfully"
+  }
+
+
+  ```
+
+### DELETE A USER ITINERARY
+
+- **URL:** `/api/v1/itineraries/delete/:id`
+- **Method:** `DELETE`
+- **Header:** `Authorization: Bearer <token>`
+
+- **Response:**
+
+  ```json
+  {
+   "message":"Itinerary deleted successfully"
+  }
+
+  
+  ```
+
+### HOTEL BOOKING
+
+### LIST AVAILABLE HOTELS
+
+
+- **URL:** `/api/v1/hotels`
+- **Method:** `GET`
+- **Request Body:**
+- **Header:** `Authorization: Bearer <token>`
+
+  ```json
+  {
+    "geoId":304026,
+    "checkIn":"2024-09-08",
+    "checkOut":"2024-09-11",
+    "pageNumber": 1
+  }
+ 
+  ```
+
+  
+
