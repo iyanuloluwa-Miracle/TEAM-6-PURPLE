@@ -22,7 +22,7 @@ jobs:
           sudo apt-get install k6
 
       - name: Run k6 tests and generate HTML report
-        run: k6 run --out=dashboard ./test/first_test.js
+        run: k6 run ./test/first_test.js
  
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v3
