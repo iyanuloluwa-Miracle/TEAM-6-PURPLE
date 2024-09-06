@@ -1,8 +1,7 @@
-const { get, getWithParams, getBooking } = require('../config/axios');
+const { get, getBooking } = require('../config/axios');
 const { searchLocationSchema, searchParamsSchema, bookHotelSchema, listAttractionsSchema } = require('../validators/hotelValidator');
 const { BookHotel } = require('../models/Hotel');
 const env = require('dotenv').config()
-const bookingUrl = process.env.BOOKINGDOTCOM;
 const tripAdvisorUrl = process.env.TRIPADVISOR;
 
 
@@ -14,7 +13,6 @@ const searchLocation = async (req, res) => {
         return res.status(400).json({ message: error.details[0].message })
     }
 
-    const baseUrl = process.env.TRIPADVISOR
     const url = `hotels/searchLocation?query=${search}`;
     const { data } = await get(tripAdvisorUrl, url)
     const result = data.data
@@ -40,25 +38,33 @@ const searchHotels = async (req, res) => {
     const { geoId, checkIn, checkOut, pageNumber, sort, ...others } = req.query;
     const url = `hotels/searchHotels?geoId=${geoId}&checkIn=${checkIn}&checkOut=${checkOut}&pageNumber=${pageNumber}&sort=${sort}`;
 
-    const { data } = await get(tripAdvisorUrl, url);
-    const results = data.data.data;
+    try {
+        const { data } = await get(tripAdvisorUrl, url);
+        const results = data.data.data;
 
-    const filteredData = results.map(result => {
-        return {
-            id: result.id,
-            title: result.title,
-            provider: result.provider,
-            price: result.priceForDisplay,
-            photos: result.cardPhotos,
-            rating: result.bubbleRating,
-            primaryInfo: result.primaryInfo
-        }
-    })
+        const filteredData = results.map(result => {
+            return {
+                id: result.id,
+                title: result.title,
+                provider: result.provider,
+                price: result.priceForDisplay,
+                photos: result.cardPhotos,
+                rating: result.bubbleRating,
+                primaryInfo: result.primaryInfo
+            }
+        })
 
-    return res.status(200).json({
-        message: 'hotel listing',
-        data: filteredData
-    });
+        return res.status(200).json({
+            message: 'hotel listing',
+            data: filteredData
+        });
+    } catch (e) {
+        console.log(e, 'error from yes:');
+        return res.status(400).json({
+            message: 'unable to get hotel listing',
+        });
+    }
+
 }
 
 const searchAttractionLocation = async (req, res) => {
@@ -80,26 +86,34 @@ const listAttractions = async (req, res) => {
     if (error) {
         return res.status(400).json({ message: error.details[0].message })
     }
-
     const { id, startDate, endDate, page } = req.query;
     const url = `attraction/searchAttractions?id=${id}${startDate ? `&startDate=${startDate}` : ''}${endDate ? `&endDate=${endDate}` : ''}${page ? `&page=${page}` : ''}`;
-    const { data } = await getBooking(url);
-    const response = data.data.products;
-    const filteredData = response.map(result => {
-        return {
-            id: result.id,
-            name: result.name,
-            slug: result.slug,
-            shortDescription: result.shortDescription,
-            primaryPhoto: result.primaryPhoto,
-            ratings: result.reviewsStats,
-            flags: result.flags
-        }
-    })
-    return res.status(200).json({
-        message: 'attraction listing',
-        data: filteredData
-    });
+
+    try {
+        const { data } = await getBooking(url);
+        const response = data.data.products;
+        const filteredData = response.map(result => {
+            return {
+                id: result.id,
+                name: result.name,
+                slug: result.slug,
+                shortDescription: result.shortDescription,
+                primaryPhoto: result.primaryPhoto,
+                ratings: result.reviewsStats,
+                flags: result.flags
+            }
+        })
+        return res.status(200).json({
+            message: 'attraction listing',
+            data: filteredData
+        });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            message: 'unable to get listing',
+        })
+    }
+
 }
 
 const userBookings = async (req, res) => {

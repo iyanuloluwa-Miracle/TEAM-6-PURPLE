@@ -1,8 +1,11 @@
 const User = require("../models/User");
+const fs = require("fs");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { registerSchema, loginSchema } = require("../validators/authValidator");
 const createError = require("http-errors");
+const blackList = fs.readFileSync("./blackList.json");
+const b = JSON.parse(blackList);
 
 const register = async (req, res, next) => {
   // Validate request body
@@ -48,16 +51,13 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: "2h",
     });
 
-    // Set the token in a cookie
-    res.cookie('token', token, {
-      httpOnly: true, // Helps prevent XSS attacks
-      secure: process.env.NODE_ENV === 'production', // Ensures the cookie is sent only over HTTPS in production
-      maxAge: 2 * 60 * 60 * 1000, // 2 hours
-    });
+    const index = b.indexOf(user.email);
+    b.splice(index, 1);
+    fs.writeFileSync('./blackList.json', JSON.stringify(b));
 
     res.json({ message: "Login successful", user, token });
   } catch (error) {
@@ -66,9 +66,14 @@ const login = async (req, res) => {
   }
 };
 
-
 const logout = (req, res) => {
-  res.clearCookie('token'); 
+
+  if (req.user) {
+    const { email } = req.user;
+    b.push(email);
+    fs.writeFileSync('./blackList.json', JSON.stringify(b));
+  }
+  delete req.user;
   res.status(200).json({ message: "Logout successful" });
 };
 
