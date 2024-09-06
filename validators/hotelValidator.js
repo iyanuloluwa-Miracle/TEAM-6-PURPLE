@@ -52,7 +52,7 @@ const searchParamsSchema = Joi.object({
 });
 
 const listAttractionsSchema = Joi.object({
-    id: Joi.number().required().messages({
+    id: Joi.string().required().messages({
         'any.required': 'id is required',
     }),
     startDate: Joi.date().optional().messages({

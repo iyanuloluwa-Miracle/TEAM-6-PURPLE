@@ -24,11 +24,11 @@ router.route('/hotels/:id')
     .all(methodNotAllowedHandler);
 
 // attractions APIs
-router.route('/attractions/:search')
-    .get(searchAttractionLocation)
-    .all(methodNotAllowedHandler);
 router.route('/attractions/list')
     .get(listAttractions)
+    .all(methodNotAllowedHandler);
+router.route('/attractions/:search')
+    .get(searchAttractionLocation)
     .all(methodNotAllowedHandler);
 
 
