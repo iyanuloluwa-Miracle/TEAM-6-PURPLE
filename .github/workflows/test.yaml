@@ -15,11 +15,11 @@ jobs:
 
       - name: Install k6
         run: sudo apt-get update
-          sudo apt-get install -y gnupg software-properties-common
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 33D40BC6
-          echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
-          sudo apt-get update
-          sudo apt-get install -y k6
+              sudo apt-get install -y gnupg software-properties-common
+              sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 33D40BC6
+              echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee /etc/apt/sources.list
+              sudo apt-get update
+              sudo apt-get install --no-install-recommends k6
  
       - name: Run k6 tests and generate HTML report
         run: k6 run -o results.html ./test/first_test.js
