@@ -1,0 +1,38 @@
+name: Run Tests
+ 
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+ 
+jobs:
+  k6-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman Collection
+        run: newman run TEAM-6-PURPLE(Testers).postman_collection.json -r html
+        
+      - name: Upload HTML report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: newman-results
+          path: newman-results.html
+        
+      - name: Install k6
+        run: npm install -g k6
+ 
+      - name: Run k6 tests and generate HTML report
+        run: k6 run -o results.html first_test.js
+ 
+      - name: Upload HTML report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-results
+          path: results.html

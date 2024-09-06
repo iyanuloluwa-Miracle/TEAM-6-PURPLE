@@ -1,8 +1,15 @@
 # Team-6-Purple API Documentation
-
 This is a Node.js API for managing travel itineraries, hotel bookings, and local attractions.
 
+
+
+### POSTMAN DOCUMENTION LINK: https://documenter.getpostman.com/view/32444128/2sAXjRUoWv
+### TESTER POSTMAN DOCUMENTATION LINK: https://documenter.getpostman.com/view/32444128/2sAXjRV8zs 
+### YOUTUBE LINK: https://www.youtube.com/watch?v=J_mBb-KL6mY
+
 ## Features
+
+#### This repository includes functional and performance testing using Newman, Postman, and k6. Tests are configured to run automatically after every pull request (PR).
 
 - **Itinerary Planning**: Create, update, and delete travel itineraries.
 - **Hotel Booking**: Integrates with external hotel booking services.
@@ -394,6 +401,44 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
 - **Method:** `GET`
 - **Header:** `Authorization: Bearer <token>`
 - **Response:**
+  
+```json
+{
+  "message": "User bookings retrieved successfully",
+  "data": {
+    "bookings": [
+      {
+        "bookingId": "BKG123456",
+        "hotelName": "Sunrise Beach Resort",
+        "checkIn": "2024-09-08",
+        "checkOut": "2024-09-11",
+        "roomType": "Deluxe Suite",
+        "totalPrice": 450,
+        "bookingStatus": "Confirmed",
+        "guests": {
+          "adults": 2,
+          "children": 1
+        }
+      },
+      {
+        "bookingId": "BKG789012",
+        "hotelName": "Mountain View Hotel",
+        "checkIn": "2024-10-01",
+        "checkOut": "2024-10-05",
+        "roomType": "Standard Room",
+        "totalPrice": 480,
+        "bookingStatus": "Pending",
+        "guests": {
+          "adults": 1,
+          "children": 0
+        }
+      }
+    ],
+    "totalBookings": 2
+  },
+ 
+}
+
 
 
 
