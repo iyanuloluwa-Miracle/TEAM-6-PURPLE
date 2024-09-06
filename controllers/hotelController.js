@@ -81,11 +81,24 @@ const listAttractions = async (req, res) => {
         return res.status(400).json({ message: error.details[0].message })
     }
 
-    const url = `attraction/searchAttractions?id=${id}&startDate=${startDate}&endDate=${endDate}&page=${page}`;
-    const results = await getBooking(url);
+    const { id, startDate, endDate, page } = req.query;
+    const url = `attraction/searchAttractions?id=${id}${startDate ? `&startDate=${startDate}` : ''}${endDate ? `&endDate=${endDate}` : ''}${page ? `&page=${page}` : ''}`;
+    const { data } = await getBooking(url);
+    const response = data.data.products;
+    const filteredData = response.map(result => {
+        return {
+            id: result.id,
+            name: result.name,
+            slug: result.slug,
+            shortDescription: result.shortDescription,
+            primaryPhoto: result.primaryPhoto,
+            ratings: result.reviewsStats,
+            flags: result.flags
+        }
+    })
     return res.status(200).json({
         message: 'attraction listing',
-        data: results.data.data
+        data: filteredData
     });
 }
 
