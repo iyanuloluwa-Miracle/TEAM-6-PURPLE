@@ -56,6 +56,21 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
 
    The API will be available at `http://localhost:5000`.
 
+### Setup
+
+  Place your .env file in the root directory of the project. The .env file should contain the following variables:
+
+  #### PORT= 5000
+  #### NODE_ENV=production
+  #### JWT_SECRET=Team-purple-6
+  #### DATABASE_URL=postgres://mxfmhphk:BsZ4J94pcOxba_EE9dotE2Va007wzPMs@flora.db.elephantsql.com/mxfmhphk
+  #### API_KEY=16389480dcmsh5d4b7f70a14fa67p169e21jsn2911aee2e087
+  #### API_HOST=tripadvisor16.p.rapidapi.com 
+  #### API_HOST_BOOKINGS=booking-com15.p.rapidapi.com
+  #### BOOKINGDOTCOM=https://booking-com15.p.rapidapi.com/api/v1
+  #### TRIPADVISOR=https://tripadvisor16.p.rapidapi.com/api/v1 
+
+
 ## API Endpoints
 
 ### User Registration
