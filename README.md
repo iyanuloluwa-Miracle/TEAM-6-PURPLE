@@ -438,8 +438,23 @@ This is a Node.js API for managing travel itineraries, hotel bookings, and local
   },
  
 }
+```
+
+### Contributors
+
+##### Backend Developers
+- Dina Iyanuloluwa
+- Kenneth Ekandem 
+
+##### API Tester
+- Folarin
+- Ijeoma Lawretta 
 
 
+
+
+
+- 
 
 
 
