@@ -17,7 +17,7 @@ jobs:
         run: npm install -g newman
 
       - name: Run Postman Collection
-        run: newman run TEAM-6-PURPLE(Testers).postman_collection.json -r html
+        run: newman run tester-collection.json -r html
         
       - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v3
