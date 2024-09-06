@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { registerSchema, loginSchema } = require("../validators/authValidator");
 const createError = require("http-errors");
-const blackList = fs.readFileSync("./blackList.json");
-const b = JSON.parse(blackList);
+let blackList = fs.readFileSync("./blackList.json");
+let b = JSON.parse(blackList);
 
 const register = async (req, res, next) => {
   // Validate request body
